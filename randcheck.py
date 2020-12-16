@@ -14,3 +14,19 @@ class RandomCracker:
     def _predict(self):
         if self.counter >= 624:
             self._regen()
+    
+def predict_getrandbits(self,k):
+        if not self.state:
+            print("Didn't recieve enough bits to predict")
+            return 0
+        if k == 0:
+            return 0
+        words = (k-1) // 32 + 1
+        res = []
+        for i in range(words):
+            r = self._predict_32()
+            if k < 32:
+                r = [0]*(32-k) +r[:k]
+            res = r + res
+            k -= 32
+        return self._to_int(res)
